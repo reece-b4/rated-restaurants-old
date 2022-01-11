@@ -39,4 +39,27 @@ describe("/api/restaurants", () => {
         });
     });
   });
+  describe("POST", () => {
+    test("status:201, responds with restaurant newly added to the database", () => {
+      const newRestaurant = {
+        restaurant_name: "Almost Famous",
+        area_id: 1,
+        cuisine: "american",
+        website: "almostfamous.co.uk",
+      };
+      return request(app)
+        .post("/api/restaurants")
+        .send(newRestaurant)
+        .expect(201)
+        .then(({ body }) => {
+          expect(body.restaurant).toEqual({
+            restaurant_id: 9,
+            restaurant_name: "Almost Famous",
+            area_id: 1,
+            cuisine: "american",
+            website: "almostfamous.co.uk",
+          });
+        });
+    });
+  });
 });
